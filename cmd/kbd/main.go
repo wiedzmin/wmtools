@@ -56,17 +56,21 @@ func handleWindows() {
 	defer recv.Close()
 	for recv.Next() {
 		ev := recv.Event().(*i3.WindowEvent)
-		if ev.Change == "focus" {
+		switch ev.Change {
+		case "focus":
 			layout, ok := windows[ev.Container.Window]
 			if !ok {
 				layout = DEFAULT_LAYOUT
 			}
-			l.Debugw("[handleWindows]", "event", ev.Change,
+			l.Debugw("[handleWindows]", "event", "focus",
 				"window", fmt.Sprintf("'%s'/'%s'", ev.Container.WindowProperties.Title, ev.Container.WindowProperties.Class),
 				"layout", layout,
 				"firsttime", !ok)
 			_, _ = shell.ShellCmd(fmt.Sprintf("xkb-switch -s %s", layout), nil, nil, false, false)
-
+		case "close":
+			l.Debugw("[handleWindows]", "event", "close",
+				"window", fmt.Sprintf("'%s'/'%s'", ev.Container.WindowProperties.Title, ev.Container.WindowProperties.Class))
+			delete(windows, ev.Container.Window)
 		}
 	}
 }
