@@ -39,12 +39,17 @@ func handleBindings() {
 	for recv.Next() {
 		ev := recv.Event().(*i3.BindingEvent)
 		if ev.Binding.Command == "nop" && ev.Binding.Symbol == "backslash" {
+			var layout *string
 			_, _ = shell.ShellCmd("xkb-switch -n", nil, nil, false, false)
-			layout, _ := shell.ShellCmd("xkb-switch", nil, nil, true, false)
 			con, _ := getFocusedContainer()
-			windows[con.Window] = *layout
-			l.Debugw("[handleBindings]", "layout", layout, "window",
-				fmt.Sprintf("'%s'/'%s'", con.WindowProperties.Title, con.WindowProperties.Class))
+			if con != nil {
+				layout, _ = shell.ShellCmd("xkb-switch", nil, nil, true, false)
+				l.Debugw("[handleBindings]", "layout", layout, "window",
+					fmt.Sprintf("'%s'/'%s'", con.WindowProperties.Title, con.WindowProperties.Class))
+				windows[con.Window] = *layout
+			} else {
+				l.Debugw("[handleBindings]", "layout", layout, "container", con)
+			}
 		}
 	}
 }
