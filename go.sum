@@ -14,7 +14,9 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/google/go-cmp v0.2.0 h1:+dTQ8DZQJz0Mb/HjFlkptS1FeQ4cWSnN941F8aEG4SQ=
 github.com/google/go-cmp v0.2.0/go.mod h1:oXzfMopK8JAjlY9xF4vHSVASa0yLyX7SntLO5aqRK0M=
+github.com/jezek/xgb v0.0.0-20210312150743-0e0f116e1240 h1:dy+DS31tGEGCsZzB45HmJJNHjur8GDgtRNX9U7HnSX4=
 github.com/jezek/xgb v0.0.0-20210312150743-0e0f116e1240/go.mod h1:3P4UH/k22rXyHIJD2w4h2XMqPX4Of/eySEZq9L6wqc4=
+github.com/jezek/xgbutil v0.0.0-20210302171758-530099784e66 h1:+wPhoJD8EH0/bXipIq8Lc2z477jfox9zkXPCJdhvHj8=
 github.com/jezek/xgbutil v0.0.0-20210302171758-530099784e66/go.mod h1:KACeV+k6b+aoLTVrrurywEbu3UpqoQcQywj4qX8aQKM=
 github.com/mediocregopher/radix/v3 v3.7.0/go.mod h1:8FL3F6UQRXHXIBSPUs5h0RybMF8i4n7wVopoX3x7Bv8=
 github.com/pkg/errors v0.8.1 h1:iURUrRGxPUNPdy5/HRSm+Yj6okJ6UtLINN0Q9M4+h3I=
@@ -30,8 +32,8 @@ github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/
 github.com/stretchr/testify v1.7.0 h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/urfave/cli/v2 v2.3.0/go.mod h1:LJmUH05zAU44vOAcrfzZQKsZbVcdbOG8rtL3/XcUArI=
-github.com/wiedzmin/toolbox v0.0.0-20210624165619-f1a7b09d6887 h1:/Y1P5L7+kqKeaXfZ3IC8TkMizJvlCnNDC/g4wgkd0Es=
-github.com/wiedzmin/toolbox v0.0.0-20210624165619-f1a7b09d6887/go.mod h1:fy0hjDXnGEujMgn/hNtTMipAGa/7JoeODizrxGQGtyM=
+github.com/wiedzmin/toolbox v0.0.0-20210704161132-83ba05dd1fb5 h1:98OPMQtzLNzNwW3TlAPhAz95IjFfwC7xLfq13blxVjA=
+github.com/wiedzmin/toolbox v0.0.0-20210704161132-83ba05dd1fb5/go.mod h1:fy0hjDXnGEujMgn/hNtTMipAGa/7JoeODizrxGQGtyM=
 go.i3wm.org/i3 v0.0.0-20190720062127-36e6ec85cc5a h1:yeQv6GWN8DsA2f3b+u1zhRIJg2HmsGYqXsd+W7ULr7Q=
 go.i3wm.org/i3 v0.0.0-20190720062127-36e6ec85cc5a/go.mod h1:7w17+r1F28Yxb1pHu8SxARJo+RGvJCAGOEf+GLw+2aQ=
 go.uber.org/atomic v1.7.0/go.mod h1:fEN4uk6kAWBTFdckzkM89CLk9XfWZrxpCo0nPH17wJc=
