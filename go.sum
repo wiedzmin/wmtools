@@ -6,7 +6,6 @@ github.com/BurntSushi/xgb v0.0.0-20210121224620-deaf085860bc/go.mod h1:IVnqGOEym
 github.com/BurntSushi/xgbutil v0.0.0-20160919175755-f7c97cef3b4e/go.mod h1:uw9h2sd4WWHOPdJ13MQpwK5qYWKYDumDqxWWIknEQ+k=
 github.com/BurntSushi/xgbutil v0.0.0-20190907113008-ad855c713046 h1:O/r2Sj+8QcMF7V5IcmiE2sMFV2q3J47BEirxbXJAdzA=
 github.com/BurntSushi/xgbutil v0.0.0-20190907113008-ad855c713046/go.mod h1:uw9h2sd4WWHOPdJ13MQpwK5qYWKYDumDqxWWIknEQ+k=
-github.com/Jeffail/gabs v1.4.0/go.mod h1:6xMvQMK4k33lb7GUUpaAPh6nKMmemQeg5d4gn7/bOXc=
 github.com/anaskhan96/soup v1.2.4/go.mod h1:6YnEp9A2yywlYdM4EgDz9NEHclocMepEtku7wg6Cq3s=
 github.com/cpuguy83/go-md2man/v2 v2.0.0-20190314233015-f79a8a8ca69d/go.mod h1:maD7wRr/U5Z6m/iR4s+kqSMx2CaBsrgA7czyZG/E6dU=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
@@ -33,8 +32,8 @@ github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/
 github.com/stretchr/testify v1.7.0 h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/urfave/cli/v2 v2.3.0/go.mod h1:LJmUH05zAU44vOAcrfzZQKsZbVcdbOG8rtL3/XcUArI=
-github.com/wiedzmin/toolbox v0.0.0-20210704161132-83ba05dd1fb5 h1:98OPMQtzLNzNwW3TlAPhAz95IjFfwC7xLfq13blxVjA=
-github.com/wiedzmin/toolbox v0.0.0-20210704161132-83ba05dd1fb5/go.mod h1:fy0hjDXnGEujMgn/hNtTMipAGa/7JoeODizrxGQGtyM=
+github.com/wiedzmin/toolbox v0.0.0-20210708104540-e93426aec321 h1:CtO9Q9DUR4qRNcsVWBgzwA88AQocw7ANgHHGivQGhJw=
+github.com/wiedzmin/toolbox v0.0.0-20210708104540-e93426aec321/go.mod h1:K9aRnVdNC469Um93wfedVsOpwfafkaBZF+k2qgm7bhk=
 go.i3wm.org/i3 v0.0.0-20190720062127-36e6ec85cc5a h1:yeQv6GWN8DsA2f3b+u1zhRIJg2HmsGYqXsd+W7ULr7Q=
 go.i3wm.org/i3 v0.0.0-20190720062127-36e6ec85cc5a/go.mod h1:7w17+r1F28Yxb1pHu8SxARJo+RGvJCAGOEf+GLw+2aQ=
 go.uber.org/atomic v1.7.0/go.mod h1:fEN4uk6kAWBTFdckzkM89CLk9XfWZrxpCo0nPH17wJc=
