@@ -9,3 +9,8 @@ require (
 	go.i3wm.org/i3 v0.0.0-20190720062127-36e6ec85cc5a
 	go.uber.org/zap v1.17.0
 )
+
+// replace (
+//     github.com/wiedzmin/toolbox => ../toolbox
+//     go.i3wm.org/i3 => ../../i3/go-i3
+// )
