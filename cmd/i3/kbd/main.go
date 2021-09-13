@@ -43,6 +43,7 @@ func handleBindings() {
 			_, _ = shell.ShellCmd("xkb-switch -n", nil, nil, false, false)
 			con, _ := getFocusedContainer()
 			if con != nil {
+				// FIXME: use toolbox/xkb new package
 				layout, _ = shell.ShellCmd("xkb-switch", nil, nil, true, false)
 				l.Debugw("[handleBindings]", "layout", layout, "window",
 					fmt.Sprintf("'%s'/'%s'", con.WindowProperties.Title, con.WindowProperties.Class))
