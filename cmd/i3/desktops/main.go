@@ -5,7 +5,9 @@ import (
 	"os"
 	"sync"
 
+	"github.com/urfave/cli/v2"
 	"github.com/wiedzmin/toolbox/impl"
+	"github.com/wiedzmin/toolbox/impl/shell"
 	"github.com/wiedzmin/toolbox/impl/xserver"
 	"go.i3wm.org/i3"
 	"go.uber.org/zap"
@@ -15,14 +17,11 @@ var (
 	logger *zap.Logger
 	wg     sync.WaitGroup
 
-	rules           *xserver.WindowRules
-	workspaces      *xserver.Workspaces
-	i3wsByWorkspace map[string]string
-
-	currentWorkspace string
+	rules      *xserver.WindowRules
+	workspaces *xserver.Workspaces
 )
 
-func prepare() {
+func populateMetadata() {
 	l := logger.Sugar()
 	var err error
 	rules, err = xserver.WindowRulesFromRedis("wm/window_rules")
@@ -30,21 +29,53 @@ func prepare() {
 		l.Warnw("[prepare]", "err", err)
 		os.Exit(1)
 	}
-	for _, r := range rules.List() {
-		l.Debugw("[prepare]", "r", r)
-	}
 	workspaces, err = xserver.WorkspacesFromRedis("wm/workspaces")
 	if err != nil {
 		l.Warnw("[prepare]", "err", err)
 		os.Exit(1)
 	}
-	i3wsByWorkspace = make(map[string]string)
-	index := 1
-	for _, w := range workspaces.List() {
-		i3wsByWorkspace[w] = fmt.Sprintf("%d: %s", index, w)
-		l.Debugw("[prepare]", "index", index, "w", w)
-		index = index + 1
+}
+
+// FIXME: wrong desktop indices are used
+func processWindows() error {
+	wsXIndexByWorkspaceName := make(map[string]string)
+	l := logger.Sugar()
+	x, err := xserver.NewX()
+	if err != nil {
+		l.Warnw("[prepare]", "err", err)
+		os.Exit(1)
 	}
+	windows, err := x.ListWindows()
+	if err != nil {
+		return err
+	}
+	for _, win := range windows {
+		traits, err := x.GetWindowTraits(&win)
+		if err != nil {
+			l.Warnw("[processWindows]", "err", err)
+			return err
+		}
+		r, err := rules.MatchTraits(*traits)
+		if err != nil {
+			l.Warnw("[processWindows]", "err", err)
+			continue
+		}
+		if r != nil {
+			ruleWSIndex, ok := wsXIndexByWorkspaceName[r.Desktop]
+			l.Debugw("[processWindows]", "window", fmt.Sprintf("%d", win), "rule", r)
+			if !ok {
+				l.Warnw("[processWindows]", "unknown rule desktop", r.Desktop)
+				continue
+			} else {
+				l.Debugw("[processWindows]", "ruleWSIndex", ruleWSIndex)
+				_, err = shell.ShellCmd(fmt.Sprintf("wmctrl -i -r %d -t %d", win, ruleWSIndex), nil, nil, false, false)
+				if err != nil {
+					l.Warnw("[processWindows]", "wmctrl failed, err:", err)
+				}
+			}
+		}
+	}
+	return nil
 }
 
 func handleWindows() {
@@ -52,6 +83,14 @@ func handleWindows() {
 	defer wg.Done()
 	recv := i3.Subscribe(i3.WindowEventType, i3.WorkspaceEventType)
 	defer recv.Close()
+	var currentWorkspace string
+	i3WorkspaceByDesktop := make(map[string]string)
+	index := 1
+	for _, w := range workspaces.List() {
+		i3WorkspaceByDesktop[w] = fmt.Sprintf("%d: %s", index, w)
+		l.Debugw("[prepare]", "index (1-based)", index, "w", w)
+		index = index + 1
+	}
 	for recv.Next() {
 		switch ev := recv.Event().(type) {
 		case *i3.WindowEvent:
@@ -72,7 +111,7 @@ func handleWindows() {
 					"rule", r,
 				)
 				if r != nil {
-					ruleWorkspace, ok := i3wsByWorkspace[r.Desktop]
+					ruleWorkspace, ok := i3WorkspaceByDesktop[r.Desktop]
 					if !ok {
 						l.Warnw("[handleWindows]", "unknown rule desktop", r.Desktop)
 						continue
@@ -102,11 +141,43 @@ func handleWindows() {
 	}
 }
 
+func perform(ctx *cli.Context) error {
+	populateMetadata()
+	if ctx.Bool("oneshot") {
+		return processWindows()
+	} else {
+		wg.Add(1)
+		go handleWindows()
+		wg.Wait()
+	}
+	return nil
+}
+
+func createCLI() *cli.App {
+	app := cli.NewApp()
+	app.Name = "i3-desktops"
+	app.Usage = "Relocates/moves windows according to window mapping rules"
+	app.Description = "i3-desktops"
+	app.Version = "0.0.1#master"
+
+	app.Flags = []cli.Flag{
+		&cli.BoolFlag{
+			Name:     "oneshot",
+			Usage:    "Iterate and relocate existing windows once",
+			Required: false,
+		},
+	}
+	app.Action = perform
+	return app
+}
+
 func main() {
 	logger = impl.NewLogger()
 	defer logger.Sync()
-	prepare()
-	wg.Add(1)
-	go handleWindows()
-	wg.Wait()
+	l := logger.Sugar()
+	app := createCLI()
+	err := app.Run(os.Args)
+	if err != nil {
+		l.Errorw("[main]", "err", err)
+	}
 }
