@@ -41,7 +41,7 @@ func createCLI() *cli.App {
 	app := cli.NewApp()
 	app.Name = "i3-mousewarp"
 	app.Usage = "Warps mouse cursor to the position of recently activated window"
-	app.Description = "i3-desktops"
+	app.Description = "i3-mousewarp"
 	app.Version = "0.0.1#master"
 
 	app.Flags = []cli.Flag{
